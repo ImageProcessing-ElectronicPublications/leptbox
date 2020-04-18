@@ -17,6 +17,7 @@ unsigned CharacterSegmentation(char* filename, unsigned smin, unsigned smax)
 {
     unsigned sbox, snum = 0, snumout = 0;
     PIX * image = pixRead(filename);
+    fprintf(stdout, "%08d,%d,%d,%d,%d\n", 0, 0, 0, image->w, image->h);
     PIX * binaryImage = pixConvertTo1(image , 250);
     BOXA* connectedBox = pixConnCompBB(binaryImage, 4);
     snum = connectedBox->n;
@@ -26,7 +27,7 @@ unsigned CharacterSegmentation(char* filename, unsigned smin, unsigned smax)
         sbox = (box->w) * (box->h);
         if ((sbox >= smin) && ((smax <= smin) || (sbox < smax)))
         {
-            fprintf(stdout, "%08d,%d,%d,%d,%d\n", i, box->x, box->y, box->w, box->h);
+            fprintf(stdout, "%08d,%d,%d,%d,%d\n", (i + 1), box->x, box->y, box->w, box->h);
             snumout++;
         }
         boxDestroy(&box);
